@@ -209,7 +209,7 @@ torch::Tensor QJLGQAScoreCudaTemplate(
     auto query_states_ptr = query_states.data_ptr<T>();
     auto key_norm_ptr = key_norm.data_ptr<T>();
     auto key_outlier_norm_ptr = key_outlier_norm.data_ptr<T>();
-    auto rand_prj_ptr = rand_prj.data_ptr<Tproj>()
+    auto rand_prj_ptr = rand_prj.data_ptr<Tproj>();
 
     int blocksPerGroup = (group_size + WARP_SIZE - 1) / WARP_SIZE;
     dim3 numBlocks(batch * k_head, n, blocksPerGroup);
