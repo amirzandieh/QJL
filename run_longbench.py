@@ -60,27 +60,27 @@ def setup_model_and_tokenizer(
         tokenizer_type='llama'
     )
 
-    config_qjl = LlamaConfig.from_pretrained(model_name)
-    config_qjl.attention_dropout = attention_dropout
-    config_qjl.key_quantization_bits = key_quantization_bits
-    config_qjl.key_quantization_bits_initial_layers = key_quantization_bits_initial_layers
-    config_qjl.initial_layers_count = initial_layers_count
+    config = LlamaConfig.from_pretrained(model_name)
+    config.attention_dropout = attention_dropout
+    config.key_quantization_bits = key_quantization_bits
+    config.key_quantization_bits_initial_layers = key_quantization_bits_initial_layers
+    config.initial_layers_count = initial_layers_count
 
-    config_qjl.outlier_count_general = outlier_count_general
-    config_qjl.outlier_count_initial_layers = outlier_count_initial_layers
+    config.outlier_count_general = outlier_count_general
+    config.outlier_count_initial_layers = outlier_count_initial_layers
 
-    config_qjl.value_quantization_bits = value_quantization_bits
-    config_qjl.group_size = group_size
-    config_qjl.buffer_size = buffer_size
+    config.value_quantization_bits = value_quantization_bits
+    config.group_size = group_size
+    config.buffer_size = buffer_size
 
     generator = torch.Generator(device=torch.device(device))
 
-    config_qjl.qjl = QJLSketch(dim=(128, config.key_quantization_bits), dim_outlier=256, rot=True, rng=generator)
-    config_qjl.qjl_initial_layers = QJLSketch(dim=(128, config.key_quantization_bits_initial_layers), dim_outlier=128,
+    config.qjl = QJLSketch(dim=(128, config.key_quantization_bits), dim_outlier=256, rot=True, rng=generator)
+    config.qjl_initial_layers = QJLSketch(dim=(128, config.key_quantization_bits_initial_layers), dim_outlier=128,
                                               rot=True,
                                               rng=generator)
 
-    config_qjl.use_flash = True  # use flash-attention with KiVi for long context inference
+    config.use_flash = True
 
     model_qjl = LlamaForCausalLM_QJL.from_pretrained(
         pretrained_model_name_or_path=model_name,
@@ -156,7 +156,7 @@ def evaluate_model(
                 tokenized_prompt[-half:], skip_special_tokens=True)
 
         if dataset_name not in ["trec", "triviaqa", "samsum", "lsht", "lcc",
-                                "repobench-p"]:  # chat models are better off without build prompts on these tasks
+                                "repobench-p"]:
             prompt = build_chat(prompt, model_qjl.config.name_or_path)
 
         input = tokenizer(prompt, truncation=False, return_tensors="pt").to(device)
