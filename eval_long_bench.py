@@ -39,11 +39,13 @@ dataset2metric = {
     "repobench-p": code_sim_score,
 }
 
+
 def parse_args(args=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', type=str, default=None)
     parser.add_argument('--e', action='store_true', help="Evaluate on LongBench-E")
     return parser.parse_args(args)
+
 
 def scorer_e(dataset, predictions, answers, lengths, all_classes):
     scores = {"0-4k": [], "4-8k": [], "8k+": []}
@@ -63,6 +65,7 @@ def scorer_e(dataset, predictions, answers, lengths, all_classes):
         scores[key] = round(100 * np.mean(scores[key]), 2)
     return scores
 
+
 def scorer(dataset, predictions, answers, all_classes):
     total_score = 0.
     for (prediction, ground_truths) in zip(predictions, answers):
@@ -73,6 +76,7 @@ def scorer(dataset, predictions, answers, all_classes):
             score = max(score, dataset2metric[dataset](prediction, ground_truth, all_classes=all_classes))
         total_score += score
     return round(100 * total_score / len(predictions), 2)
+
 
 if __name__ == '__main__':
     args = parse_args()

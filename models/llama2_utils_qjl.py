@@ -72,6 +72,9 @@ class QJLSketch(torch.nn.Module):
         assert data_quant.shape[:4] == norm_data.shape[:4], 'data quant and its norm should have same shape'
         assert outlier_quant.shape[:4] == norm_outlier.shape[:4], 'outlier quant and its norm should have same shape'
         sketched_q = torch.matmul(query.to(self.proj_dir_score.dtype), self.proj_dir_score)
+        if data_quant.stride(-1) != 1:
+            data_quant = data_quant.contiguous()
+
         scores = qjl_kernel.qjl_score(data_quant.contiguous(),
                                       outlier_quant.contiguous(),
                                       norm_data.contiguous(),
