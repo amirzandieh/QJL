@@ -62,7 +62,8 @@ python plot_runtime.py
 
 
 ### Citation
-```@article{zandieh2024qjl,
+```
+@article{zandieh2024qjl,
   title={QJL: 1-Bit Quantized JL Transform for KV Cache Quantization with Zero Overhead},
   author={Zandieh, Amir and Daliri, Majid and Han, Insu},
   journal={arXiv preprint arXiv:2406.03482},
