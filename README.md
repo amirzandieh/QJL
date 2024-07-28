@@ -55,7 +55,7 @@ python longbench.py --model_name "lmsys/longchat-7b-v1.5-32k" \
 ```
 
 ### Runtime Evaluation
-To plot the runtime, use the following command:
+To produce the runtime experiments from the paper and plot the runtime, sinly run the following command:
 ```sh
 python plot_runtime.py
 ```
