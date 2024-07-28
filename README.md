@@ -3,11 +3,14 @@
 
 
 ## Overview
-QJL (Quantized Johnson-Lindenstrauss) is a novel approach to compress the Key-Value (KV) cache in large language models (LLMs). QJL applies a Johnson-Lindenstrauss transform followed by sign-bit quantization, resulting in a 1-bit representation of key embeddings. Unlike existing methods, QJL eliminates memory overheads by removing the need to store quantization constants while providing an unbiased estimator for inner products with minimal distortion.
+QJL (Quantized Johnson-Lindenstrauss) is a novel approach to compress the Key-Value (KV) cache in large language models (LLMs). It applies a Johnson-Lindenstrauss (JL) transform as a preconditioner to the embedding vectors in the cache, then quantizes the transformed vectors to a single sign bit, resulting in a 1-bit representation of the embedding vectors. Preconditioning with the JL transform enables QJL to quantize vectors in the cache to a single bit without needing to normalize the embedding vectors, while providing an unbiased estimator for inner products with minimal distortion. This eliminates memory overheads associated with storing quantization constants, which is common in previous methods.
+
 
 ![LLM Decoding](./img/fig_llm_decoding.png)
 
-QJL achieves high relative distortion accuracy on attention scores. It handles practical considerations like outliers in key embeddings and uses an orthogonalized JL transform for improved performance. The method is designed to be efficient and GPU-friendly, with lightweight CUDA kernels for core operations.
+QJL achieves provably minimal relative distortion on attention scores, effortlessly handles practical challenges like outlier coordinates in key embeddings, and can be enhanced using orthogonalized JL transforms for improved performance. The method is modular and is specifically designed to be efficient and GPU-friendly, with lightweight CUDA kernels for core operations.
+The functional block diagram of QJL is shown below.
+
 
 ![QJL](./img/fig_qjl3.png)
 
