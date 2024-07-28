@@ -51,10 +51,20 @@ python longbench.py --model_name "lmsys/longchat-7b-v1.5-32k" \
     --n_data 150
 ```
 
-### Plot Runtime
+### Runtime Evaluation
 To plot the runtime, use the following command:
 ```sh
 python plot_runtime.py
 ```
 | ![Plot Llama2 Encoding Time](./img/fig_quant_encoding_time_llama2.png) | ![Plot Llama2 Decoding Time](./img/fig_quant_decoding_time_llama2.png) | ![Plot Llama3](./img/fig_quant_total_time_llama3.png) |
 |:---------------------------------------------------------------------:|:----------------------------------------------------------------------:|:-----------------------------------------------------:|
+
+
+
+### Citation
+@article{zandieh2024qjl,
+  title={QJL: 1-Bit Quantized JL Transform for KV Cache Quantization with Zero Overhead},
+  author={Zandieh, Amir and Daliri, Majid and Han, Insu},
+  journal={arXiv preprint arXiv:2406.03482},
+  year={2024}
+}
