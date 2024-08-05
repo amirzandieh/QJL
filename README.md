@@ -32,7 +32,7 @@ Experimental results demonstrate QJL's effectiveness across various LLMs, includ
 3. Set up the QJL kernel:
     ```sh
     cd qjl_kernel
-    python setup.py install
+    python setup.py build_ext --inplace
     ```
 
 ## Evaluate QJL on LongBench
